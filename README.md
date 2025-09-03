@@ -15,6 +15,36 @@ This project implements neural style transfer in Python, applying the artistic s
 - NumPy
 - Matplotlib / PIL for image handling
 
+## How Neural Style Transfer Works
+
+Neural style transfer optimizes a new image by blending the *content* of one image with the *style* of another. The algorithm minimizes a weighted sum of two losses computed from deep CNN feature maps:
+
+- **Content Loss**  
+  Measures how different the generated image is from the content image at deeper CNN layers.
+
+  \[
+  L_{content}(C, G) = \frac{1}{2} \sum_{i,j}(F_{ij}^G - F_{ij}^C)^2
+  \]
+
+- **Style Loss**  
+  Compares the correlations between feature maps (using Gram matrices) between the generated image and the style image.
+
+  \[
+  L_{style}(S, G) = \sum_l w_l E_l
+  \]
+  with
+  \[
+  E_l = \frac{1}{4N_l^2 M_l^2} \sum_{i,j} (G_{ij}^G - G_{ij}^S)^2
+  \]
+
+- **Total Loss**
+  \[
+  L_{total} = \alpha L_{content} + \beta L_{style}
+  \]
+  where \( \alpha \) and \( \beta \) are weights for content and style trade-off.
+
+The algorithm iteratively updates the generated image to minimize this loss using gradient descent.
+
 ## How to Run
 1. Clone the repository: `git clone https://github.com/venkatbhaskar4u/Neural-Style-Transfer.git`
 2. Install dependencies (`pip install -r requirements.txt` or include setup instructions)
